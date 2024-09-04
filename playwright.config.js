@@ -17,7 +17,7 @@ module.exports = defineConfig({
 
   /* Shared settings for all the projects below.*/
   use: {
-    headless:false,
+    headless:true,
     // screenshot:'on',
     /* Collect trace when retrying the failed test.*/
     trace: 'retain-on-failure',
