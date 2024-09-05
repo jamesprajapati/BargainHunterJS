@@ -23,11 +23,15 @@
 3. **Run all tests:**
    ```bash
    npx playwright test
-   ```  
+   ```
+E-commerce Test Execution:[Watch the video](https://github.com/jamesprajapati/BargainHunterJS/blob/main/Execution%20videos/Ecommarce%20Test%20execution.mp4)
+   
 ## Installation & Testing of Back End Automation
 
 1. Download and Install Postman 
 2. Import the test collection in Postman from PostmanTests folder
 
 ##  Running Postman tests
-3. Run Automated test collection 
+3. Run Automated test collection
+
+Automated API Test Execution:[Watch the video](https://github.com/jamesprajapati/BargainHunterJS/blob/main/Execution%20videos/Automated%20Api%20test%20execution.mp4)
