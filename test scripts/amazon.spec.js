@@ -19,7 +19,7 @@ test.describe('Amazon tests', () => {
 
     });
 
-    test("Amazon Home: Navigate to amazon website and verify that home page displayed correctly", async () => {
+    test("Amazon: Navigate to amazon website and verify that home page displayed correctly", async () => {
 
         await Step("Verify Page title, Search Bar and Add To Cart Button is visible", async () => {
             expect(await commanPage.getPageTitle()).toMatch(amazonTitile);

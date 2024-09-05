@@ -1,2 +1,2 @@
 export const amazonTitile ="Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in";
-export const flipcartTitle="";
+export const flipkartTitle="Online Shopping Site for Mobiles, Electronics, Furniture, Grocery, Lifestyle, Books & More. Best Offers!";
