@@ -1,0 +1,493 @@
+{
+	"info": {
+		"_postman_id": "48811760-429f-471e-af39-65bb1e9276e5",
+		"name": "ReqRes Automated Test Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38149090"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "User Registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.clear();\r",
+									"pm.environment.set(\"counterPass\", 0);\r",
+									"pm.environment.set(\"counterFail\", 0);\r",
+									"pm.environment.set(\"startTime\", Date.now());\r",
+									"\r",
+									"let jsonData = pm.response.json();\r",
+									"let counterPass = pm.environment.get(\"counterPass\") / 1;\r",
+									"let counterFail = pm.environment.get(\"counterFail\") / 1;\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response code is 200\", function () {\r",
+									"    (pm.response.code === 200) ? counterPass++ : counterFail++;\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"ID is 4\", function () {\r",
+									"    (jsonData.id === 4) ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.id).to.eql(4);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is present and not null\", function () {\r",
+									"    (jsonData.token && jsonData.token !== null) ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.token).to.not.be.oneOf([undefined, null]);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"counterPass\", counterPass);\r",
+									"pm.environment.set(\"counterFail\", counterFail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{userEmail}}\",\r\n    \"password\": \"{{userPSW}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/api/register",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Registration - Unsuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let counterPass = pm.environment.get(\"counterPass\") / 1;\r",
+									"let counterFail = pm.environment.get(\"counterFail\") / 1;\r",
+									"\r",
+									"pm.test(\"Response code is 400\", function () {\r",
+									"    (pm.response.code === 400) ? counterPass++ : counterFail++;\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message is 'Missing password'\", function () {\r",
+									"    (jsonData.error === \"Missing password\") ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.error).to.eql(\"Missing password\");\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"counterPass\", counterPass);\r",
+									"pm.environment.set(\"counterFail\", counterFail);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{userEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/api/register",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let counterPass = pm.environment.get(\"counterPass\") / 1;\r",
+									"let counterFail = pm.environment.get(\"counterFail\") / 1;\r",
+									"\r",
+									"pm.test(\"Response code is 201\", function () {\r",
+									"    (pm.response.code === 201) ? counterPass++ : counterFail++;\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Name is 'morpheus'\", function () {\r",
+									"    (jsonData.name === \"morpheus\") ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.name).to.eql(\"morpheus\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Job is 'leader'\", function () {\r",
+									"    (jsonData.job === \"leader\") ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.job).to.eql(\"leader\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"ID is present and not null\", function () {\r",
+									"    (jsonData.id && jsonData.id !== null) ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.id).to.not.be.oneOf([undefined, null]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"CreatedAt is a valid ISO 8601 date\", function () {\r",
+									"    const createdAtDate = new Date(jsonData.createdAt);\r",
+									"    const isValidDate = !isNaN(createdAtDate.getTime());\r",
+									"    (isValidDate) ? counterPass++ : counterFail++;\r",
+									"    pm.expect(isValidDate).to.be.true;\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"counterPass\", counterPass);\r",
+									"pm.environment.set(\"counterFail\", counterFail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/api/users",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update - Put",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let counterPass = pm.environment.get(\"counterPass\") / 1;\r",
+									"let counterFail = pm.environment.get(\"counterFail\") / 1;\r",
+									"\r",
+									"pm.test(\"Response code is 200\", function () {\r",
+									"    (pm.response.code === 200) ? counterPass++ : counterFail++;\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Name is 'morpheus'\", function () {\r",
+									"    (jsonData.name === \"morpheus\") ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.name).to.eql(\"morpheus\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Job is 'zion resident'\", function () {\r",
+									"    (jsonData.job === \"zion resident\") ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.job).to.eql(\"zion resident\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"UpdatedAt is a valid ISO 8601 date\", function () {\r",
+									"    const updatedAtDate = new Date(jsonData.updatedAt);\r",
+									"    const isValidDate = !isNaN(updatedAtDate.getTime());\r",
+									"    (isValidDate) ? counterPass++ : counterFail++;\r",
+									"    pm.expect(isValidDate).to.be.true;\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"counterPass\", counterPass);\r",
+									"pm.environment.set(\"counterFail\", counterFail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/api/users/2",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update - Patch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let counterPass = pm.environment.get(\"counterPass\") / 1;\r",
+									"let counterFail = pm.environment.get(\"counterFail\") / 1;\r",
+									"\r",
+									"pm.test(\"Response code is 200\", function () {\r",
+									"    (pm.response.code === 200) ? counterPass++ : counterFail++;\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Name is 'morpheus'\", function () {\r",
+									"    (jsonData.name === \"morpheus\") ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.name).to.eql(\"morpheus\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Job is 'zion resident'\", function () {\r",
+									"    (jsonData.job === \"zion resident\") ? counterPass++ : counterFail++;\r",
+									"    pm.expect(jsonData.job).to.eql(\"zion resident\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"UpdatedAt is a valid ISO 8601 date\", function () {\r",
+									"    const updatedAtDate = new Date(jsonData.updatedAt);\r",
+									"    const isValidDate = !isNaN(updatedAtDate.getTime());\r",
+									"    (isValidDate) ? counterPass++ : counterFail++;\r",
+									"    pm.expect(isValidDate).to.be.true;\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"counterPass\", counterPass);\r",
+									"pm.environment.set(\"counterFail\", counterFail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/api/users/2",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update - Patch Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let counterPass = pm.environment.get(\"counterPass\") / 1;\r",
+									"let counterFail = pm.environment.get(\"counterFail\") / 1;\r",
+									"\r",
+									"pm.test(\"Response code is 204\", function () {\r",
+									"    (pm.response.code === 204) ? counterPass++ : counterFail++;\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"counterPass\", counterPass);\r",
+									"pm.environment.set(\"counterFail\", counterFail);\r",
+									"\r",
+									"pm.environment.set(\"EndTime\", Date.now());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/api/users/2",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": " https://reqres.in",
+			"type": "string"
+		},
+		{
+			"key": "userEmail",
+			"value": "eve.holt@reqres.in",
+			"type": "string"
+		},
+		{
+			"key": "userPSW",
+			"value": "pistol",
+			"type": "string"
+		}
+	]
+}

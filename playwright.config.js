@@ -14,10 +14,12 @@ module.exports = defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: 3,
   reporter: 'html',
+  timeout:60000,
 
   /* Shared settings for all the projects below.*/
   use: {
-    headless:true,
+    headless:false,
+    bypassCSP:true,
     // screenshot:'on',
     /* Collect trace when retrying the failed test.*/
     trace: 'retain-on-failure',
@@ -26,8 +28,16 @@ module.exports = defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: 'Amazon and Flipkart Tests',
+      testMatch: ['amazon.spec.js', 'flipkart.spec.js'],
       use: { ...devices['Desktop Chrome'] },
+    },
+
+    {
+      name: 'Bargain Hunter Tests',
+      testMatch: ['hunter.spec.js'],
+      use: { ...devices['Desktop Chrome'] },
+      dependencies: ['Amazon and Flipkart Tests'],
     },
 
     // {

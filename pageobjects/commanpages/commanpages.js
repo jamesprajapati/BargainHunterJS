@@ -15,15 +15,5 @@ export class commanpages {
         return (await this.page.title()).toString();
     }
 
-    highlightAndScreenshot = async (selector) => {
-        if (await selector.isVisible()) {
-            await this.page.evaluate((selector) => {
-                selector.style.border = '2px solid red';
-            }, selector);
-            //await page.screenshot({ path: screenshotPath });
-        } else {
-            console.log(`Element with selector ${selector} is not visible`);
-        }
-    }
 
 }
