@@ -10,10 +10,11 @@
 ## Installation & Testing of Front End Automation
 
 1. **Clone the repository:**
-
+   ```bash
    git clone https://github.com/jamesprajapati/BargainHunterJS.git
+   
    cd BargainHunterJS
-
+   ```
 2. **Install dependencies:** Make sure you have Node.js installed. Then run:   
     ```bash
     npm install
