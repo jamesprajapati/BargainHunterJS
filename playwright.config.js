@@ -18,7 +18,7 @@ module.exports = defineConfig({
 
   /* Shared settings for all the projects below.*/
   use: {
-    headless:true,
+    headless:false,
     bypassCSP:true,
     // screenshot:'on',
     /* Collect trace when retrying the failed test.*/
